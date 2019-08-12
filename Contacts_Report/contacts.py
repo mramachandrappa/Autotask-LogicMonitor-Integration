@@ -5,16 +5,15 @@ import csv
 from xml.dom import minidom
 from update_widget import update_widget
 
+#From Autotask Accounts.
 AccountID = '337'
 
 url = 'https://webservices4.autotask.net/ATServices/1.6/atws.asmx'
 headers = {'content-type': 'text/xml'}
-uri = \
-    'https://ww4.autotask.net/Mvc/ServiceDesk/TicketDetail.mvc?ticketId=urlid'
+uri = 'https://ww4.autotask.net/Mvc/ServiceDesk/TicketDetail.mvc?ticketId=urlid'
 href_link = '<a href=link target=_blank>tickets</a>'
 condition = '<condition><field>AccountID<expression op="equals">AccountName</expression></field></condition>'
-reqBody = \
-    """<?xml version="1.0" encoding="UTF-8"?>
+reqBody = """<?xml version="1.0" encoding="UTF-8"?>
       <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <soap:Header>
           <AutotaskIntegrations xmlns="http://autotask.net/ATWS/v1_6/">
@@ -28,22 +27,14 @@ reqBody = \
    </soap:Body>
    </soap:Envelope>"""
 
-# Replacing params based on user inupt
-
+# Replacing params
 body = reqBody.replace('conditions_list', condition).replace('AccountName', AccountID)
 
-# print body
+auth_values = ('<username>','<Password>')
 
-auth_values = ('<username>',
-               '<Password>')
-
-response = requests.post(url, data=body, headers=headers,
-                         auth=auth_values)
-
-str1 = response.content
-
+response = requests.post(url, data=body, headers=headers, auth=auth_values)
 with open('data.xml', 'wb+') as f:
-    f.write(str1)
+    f.write(response.content)
 
 doc = minidom.parse('data.xml')
 
