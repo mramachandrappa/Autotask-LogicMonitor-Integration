@@ -2,4 +2,4 @@
 
 MY FIRST PYTHON CODE.
 
-Python code to pull Ticket data from Autotask to Logic Monitor Dashboard.
+Pulls Ticket stats from Autotask using SOAP API calls. Filter and display's stats in Logic Monitor Dashboard using REST API's.
